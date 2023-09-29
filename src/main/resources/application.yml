@@ -1,0 +1,15 @@
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: localhost:8097
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      retries: 0
+      properties:
+        delivery.timeout.ms: 1500
+        request.timeout.ms: 1500
+        #retry.backoff.ms: 500
+        #transaction.timeout.ms: 3000
+        max.block.ms: 1500
+
+topic.name.transaction-ingestion: incoming-transactions
