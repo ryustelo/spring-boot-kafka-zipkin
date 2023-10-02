@@ -1,6 +1,6 @@
-package com.transactions.challenge.ingestion.controller;
+package com.transactions.challenge.ingestion.api.controller;
 
-import com.transactions.challenge.ingestion.model.TransactionRequest;
+import com.transactions.challenge.ingestion.api.model.TransactionRequest;
 import com.transactions.challenge.ingestion.service.TransactionsService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -22,9 +22,10 @@ import static org.springframework.http.HttpStatus.ACCEPTED;
         produces = MediaType.APPLICATION_JSON_VALUE,
         consumes = MediaType.APPLICATION_JSON_VALUE)
 public class TransactionsController {
-    @Autowired
+
     private final TransactionsService transactionsService;
 
+    @Autowired
     TransactionsController(TransactionsService transactionsService) {
         this.transactionsService = transactionsService;
     }

@@ -1,4 +1,4 @@
-package com.transactions.challenge.ingestion.model;
+package com.transactions.challenge.ingestion.api.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;

@@ -20,8 +20,8 @@ dependencies {
 	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$OPENAPI_VERSION"
 	//implementation 'ch.qos.logback:logback-classic:1.4.11'
 	//implementation "ch.qos.logback.contrib:logback-json-classic:$LOGBACK_VERSION"
-	//implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
 	//implementation "ch.qos.logback.contrib:logback-jackson:$LOGBACK_VERSION"
+	implementation "net.logstash.logback:logstash-logback-encoder:$LOGBACK_ENCODER_VERSION"
 	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'

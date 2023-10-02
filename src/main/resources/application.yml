@@ -1,4 +1,5 @@
 spring:
+  application.name: ingestion-service
   kafka:
     producer:
       bootstrap-servers: localhost:8097
@@ -13,3 +14,6 @@ spring:
         max.block.ms: 1500
 
 topic.name.transaction-ingestion: incoming-transactions
+logging:
+  level.root: INFO
+  pattern.level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"

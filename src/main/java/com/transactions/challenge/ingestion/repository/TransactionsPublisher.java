@@ -1,11 +1,12 @@
 package com.transactions.challenge.ingestion.repository;
 
-import com.transactions.challenge.ingestion.exception.TransactionPublisherException;
-import com.transactions.challenge.ingestion.model.TransactionRequest;
+import com.transactions.challenge.ingestion.api.model.TransactionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.concurrent.ExecutionException;
 
 @Repository
 public class TransactionsPublisher {
@@ -20,13 +21,14 @@ public class TransactionsPublisher {
         this.topicName = topicName;
     }
 
-    public void publishMessage(TransactionRequest transaction) {
+    public void publishMessage(TransactionRequest transaction)
+            throws ExecutionException, InterruptedException {
 
-        try {
+        //try {
             kafkaTemplate.send(topicName, transaction.toString()).get();
-        } catch (Exception e) {
-            throw new TransactionPublisherException();
-        }
+        //} catch (Exception e) {
+        //    throw new TransactionPublisherException(e);
+        //}
 
 //        future.whenComplete((result, ex) -> {
 //            if (nonNull(ex)) {

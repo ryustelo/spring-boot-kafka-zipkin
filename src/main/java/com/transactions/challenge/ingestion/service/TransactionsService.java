@@ -1,6 +1,7 @@
 package com.transactions.challenge.ingestion.service;
 
-import com.transactions.challenge.ingestion.model.TransactionRequest;
+import com.transactions.challenge.ingestion.api.model.TransactionRequest;
+import com.transactions.challenge.ingestion.exception.TransactionPublisherException;
 import com.transactions.challenge.ingestion.repository.TransactionsPublisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,14 @@ public class TransactionsService {
     }
 
     public void ingest(TransactionRequest transactionRequest) {
-        transactionsPublisher.publishMessage(transactionRequest);
+        log.info("Transaction requested to ingest: {}", transactionRequest);
+
+        try {
+            transactionsPublisher.publishMessage(transactionRequest);
+        } catch (Exception e) {
+            log.error("Error while trying to ingest transaction: {}", transactionRequest);
+            throw new TransactionPublisherException(e);
+        }
+        log.info("Transaction successfully ingested: {}", transactionRequest);
     }
 }
