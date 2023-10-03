@@ -24,16 +24,6 @@ public class TransactionsPublisher {
     public void publishMessage(TransactionRequest transaction)
             throws ExecutionException, InterruptedException {
 
-        //try {
-            kafkaTemplate.send(topicName, transaction.toString()).get();
-        //} catch (Exception e) {
-        //    throw new TransactionPublisherException(e);
-        //}
-
-//        future.whenComplete((result, ex) -> {
-//            if (nonNull(ex)) {
-//                throw new RuntimeException(ex.getMessage());
-//            }
-//        });
+        kafkaTemplate.send(topicName, transaction.toString()).get();
     }
 }
