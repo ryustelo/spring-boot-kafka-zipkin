@@ -1,6 +1,6 @@
 package com.transactions.challenge.ingestion.repository;
 
-import com.transactions.challenge.ingestion.api.model.TransactionRequest;
+import com.transactions.challenge.ingestion.api.model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -21,7 +21,7 @@ public class TransactionsPublisher {
         this.topicName = topicName;
     }
 
-    public void publishMessage(TransactionRequest transaction)
+    public void publish(Transaction transaction)
             throws ExecutionException, InterruptedException {
 
         kafkaTemplate.send(topicName, transaction.toString()).get();

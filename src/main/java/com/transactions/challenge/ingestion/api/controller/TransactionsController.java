@@ -1,6 +1,6 @@
 package com.transactions.challenge.ingestion.api.controller;
 
-import com.transactions.challenge.ingestion.api.model.TransactionRequest;
+import com.transactions.challenge.ingestion.api.model.Transaction;
 import com.transactions.challenge.ingestion.service.TransactionsService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -36,9 +36,9 @@ public class TransactionsController {
             @ApiResponse(responseCode = "500", description = "Internal error during ingestion")
     })
     @PostMapping("/transactions")
-    public ResponseEntity<Void> ingestTransaction(@Valid @RequestBody TransactionRequest transactionRequest) {
+    public ResponseEntity<Void> ingestTransaction(@Valid @RequestBody Transaction transaction) {
 
-        transactionsService.ingest(transactionRequest);
+        transactionsService.ingest(transaction);
         return ResponseEntity.status(ACCEPTED.value()).build();
     }
 }

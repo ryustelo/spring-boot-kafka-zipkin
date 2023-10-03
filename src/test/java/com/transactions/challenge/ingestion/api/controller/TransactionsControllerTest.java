@@ -1,6 +1,6 @@
 package com.transactions.challenge.ingestion.api.controller;
 
-import com.transactions.challenge.ingestion.api.model.TransactionRequest;
+import com.transactions.challenge.ingestion.api.model.Transaction;
 import com.transactions.challenge.ingestion.exception.TransactionPublisherException;
 import com.transactions.challenge.ingestion.service.TransactionsService;
 import io.restassured.RestAssured;
@@ -39,28 +39,28 @@ class TransactionsControllerTest {
 
     @Test
     void givenValidRequest_whenPost_returnsAccepted() {
-        TransactionRequest request = TransactionRequest.builder().transactionId(123L).build();
-        doNothing().when(transactionsService).ingest(any(TransactionRequest.class));
+        Transaction request = Transaction.builder().transactionId(123L).build();
+        doNothing().when(transactionsService).ingest(any(Transaction.class));
 
         assertTransactionsIngestionResponse(request, ACCEPTED);
     }
 
     @Test
     void givenInvalidRequest_whenPost_returnsBadRequest() {
-        TransactionRequest request = TransactionRequest.builder().build();
+        Transaction request = Transaction.builder().build();
 
         assertTransactionsIngestionResponse(request, BAD_REQUEST);
     }
 
     @Test
     void givenValidRequest_whenPost_returnsInternalServerError() {
-        TransactionRequest request = TransactionRequest.builder().transactionId(123L).build();
+        Transaction request = Transaction.builder().transactionId(123L).build();
         doThrow(new TransactionPublisherException()).when(transactionsService).ingest(request);
 
         assertTransactionsIngestionResponse(request, INTERNAL_SERVER_ERROR);
     }
 
-    private static void assertTransactionsIngestionResponse(TransactionRequest request, HttpStatus httpStatus) {
+    private static void assertTransactionsIngestionResponse(Transaction request, HttpStatus httpStatus) {
         with().contentType(JSON)
                 .body(request)
                 .when().post(TRANSACTIONS_INGESTION_URL)

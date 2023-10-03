@@ -1,6 +1,6 @@
 package com.transactions.challenge.ingestion.service;
 
-import com.transactions.challenge.ingestion.api.model.TransactionRequest;
+import com.transactions.challenge.ingestion.api.model.Transaction;
 import com.transactions.challenge.ingestion.exception.TransactionPublisherException;
 import com.transactions.challenge.ingestion.repository.TransactionsPublisher;
 import io.micrometer.observation.annotation.Observed;
@@ -21,15 +21,15 @@ public class TransactionsService {
     }
 
     @Observed(contextualName = "ingest-transaction")
-    public void ingest(TransactionRequest transactionRequest) {
-        log.info("Transaction requested to ingest: {}", transactionRequest);
+    public void ingest(Transaction transaction) {
+        log.info("Transaction requested to ingest: {}", transaction);
 
         try {
-            transactionsPublisher.publishMessage(transactionRequest);
+            transactionsPublisher.publish(transaction);
         } catch (Exception e) {
-            log.error("Error while trying to ingest transaction: {}", transactionRequest);
+            log.error("Error while trying to ingest transaction: {}", transaction);
             throw new TransactionPublisherException(e);
         }
-        log.info("Transaction successfully ingested: {}", transactionRequest);
+        log.info("Transaction successfully ingested: {}", transaction);
     }
 }

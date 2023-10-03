@@ -7,12 +7,12 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Schema(description = "Transaction Ingestion Request")
-@JsonDeserialize(builder = TransactionRequest.TransactionRequestBuilder.class)
-public record TransactionRequest(
+@JsonDeserialize(builder = Transaction.TransactionBuilder.class)
+public record Transaction(
         @Schema(description = "Transaction identifier", example = "123456789")
         @NotNull Long transactionId) {
 
-    public TransactionRequest(Long transactionId) {
+    public Transaction(Long transactionId) {
         this.transactionId = transactionId;
     }
 
@@ -21,23 +21,23 @@ public record TransactionRequest(
         return "{\"transactionId\": %s}".formatted(this.transactionId);
     }
 
-    public static TransactionRequestBuilder builder() {
-        return new TransactionRequestBuilder();
+    public static TransactionBuilder builder() {
+        return new TransactionBuilder();
     }
 
     @JsonPOJOBuilder(withPrefix = "")
-    public static class TransactionRequestBuilder {
+    public static class TransactionBuilder {
 
         @NotEmpty
         private Long transactionId;
 
-        public TransactionRequest.TransactionRequestBuilder transactionId(Long transactionId) {
+        public TransactionBuilder transactionId(Long transactionId) {
             this.transactionId = transactionId;
             return this;
         }
 
-        public TransactionRequest build() {
-            return new TransactionRequest(this.transactionId);
+        public Transaction build() {
+            return new Transaction(this.transactionId);
         }
     }
 }

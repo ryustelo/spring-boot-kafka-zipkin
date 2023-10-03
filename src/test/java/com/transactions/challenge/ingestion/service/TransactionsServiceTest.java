@@ -1,6 +1,6 @@
 package com.transactions.challenge.ingestion.service;
 
-import com.transactions.challenge.ingestion.api.model.TransactionRequest;
+import com.transactions.challenge.ingestion.api.model.Transaction;
 import com.transactions.challenge.ingestion.exception.TransactionPublisherException;
 import com.transactions.challenge.ingestion.repository.TransactionsPublisher;
 import org.junit.jupiter.api.Test;
@@ -28,24 +28,24 @@ class TransactionsServiceTest {
 
     @Test
     void givenRequest_whenIngest_thenTransactionSuccessfullyIngested(CapturedOutput output) throws Exception {
-        TransactionRequest request = TransactionRequest.builder()
+        Transaction request = Transaction.builder()
                 .transactionId(111L).build();
 
         underTest.ingest(request);
 
-        verify(transactionsPublisher).publishMessage(request);
+        verify(transactionsPublisher).publish(request);
         assertThat(output).contains("Transaction successfully ingested");
     }
 
     @Test
     void givenPublisherThrowsException_whenIngest_thenTransactionNotIngested(CapturedOutput output) throws Exception {
-        TransactionRequest request = TransactionRequest.builder().transactionId(111L).build();
+        Transaction request = Transaction.builder().transactionId(111L).build();
         doThrow(new InterruptedException())
-                .when(transactionsPublisher).publishMessage(request);
+                .when(transactionsPublisher).publish(request);
 
         assertThrows(TransactionPublisherException.class, () -> underTest.ingest(request));
 
-        verify(transactionsPublisher).publishMessage(request);
+        verify(transactionsPublisher).publish(request);
         assertThat(output).contains("Error while trying to ingest transaction");
     }
 }
