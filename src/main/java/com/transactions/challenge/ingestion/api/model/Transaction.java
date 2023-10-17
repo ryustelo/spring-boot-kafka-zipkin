@@ -16,11 +16,6 @@ public record Transaction(
         this.transactionId = transactionId;
     }
 
-    @Override
-    public String toString() {
-        return "{\"transactionId\": %s}".formatted(this.transactionId);
-    }
-
     public static TransactionBuilder builder() {
         return new TransactionBuilder();
     }
