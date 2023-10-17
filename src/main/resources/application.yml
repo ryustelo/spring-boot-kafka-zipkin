@@ -7,10 +7,6 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       client-id: ingestion-client
       group-id: ingestion-group
-      properties:
-        delivery.timeout.ms: 1500
-        request.timeout.ms: 1500
-        max.block.ms: 1500
 
 topic.name.transaction-ingestion: incoming-transactions
 logging:

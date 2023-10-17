@@ -7,6 +7,7 @@ import io.micrometer.observation.annotation.Observed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +22,7 @@ public class TransactionsService {
     }
 
     @Observed(contextualName = "ingest-transaction")
+    @Async
     public void ingest(Transaction transaction) {
         log.info("Transaction requested to ingest: {}", transaction);
 
