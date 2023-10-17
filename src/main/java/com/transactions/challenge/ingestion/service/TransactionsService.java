@@ -2,7 +2,7 @@ package com.transactions.challenge.ingestion.service;
 
 import com.transactions.challenge.ingestion.api.model.Transaction;
 import com.transactions.challenge.ingestion.exception.TransactionPublisherException;
-import com.transactions.challenge.ingestion.repository.TransactionsPublisher;
+import com.transactions.challenge.ingestion.event.publisher.TransactionsPublisher;
 import io.micrometer.observation.annotation.Observed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,10 +26,10 @@ public class TransactionsService {
 
         try {
             transactionsPublisher.publish(transaction);
-        } catch (Exception e) {
-            log.error("Error while trying to ingest transaction: {}", transaction);
-            throw new TransactionPublisherException(e);
+            log.info("Transaction successfully ingested: {}", transaction);
+        } catch (TransactionPublisherException e) {
+            log.error("Error while trying to ingest transaction: {} with message: {}",
+                    transaction, e.getMessage());
         }
-        log.info("Transaction successfully ingested: {}", transaction);
     }
 }

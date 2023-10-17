@@ -1,8 +1,8 @@
 package com.transactions.challenge.ingestion.service;
 
 import com.transactions.challenge.ingestion.api.model.Transaction;
+import com.transactions.challenge.ingestion.event.publisher.TransactionsPublisher;
 import com.transactions.challenge.ingestion.exception.TransactionPublisherException;
-import com.transactions.challenge.ingestion.repository.TransactionsPublisher;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,7 +12,6 @@ import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 
@@ -27,7 +26,7 @@ class TransactionsServiceTest {
     private TransactionsService underTest;
 
     @Test
-    void givenRequest_whenIngest_thenTransactionSuccessfullyIngested(CapturedOutput output) throws Exception {
+    void givenRequest_whenIngest_thenTransactionSuccessfullyIngested(CapturedOutput output) {
         Transaction request = Transaction.builder()
                 .transactionId(111L).build();
 
@@ -38,12 +37,12 @@ class TransactionsServiceTest {
     }
 
     @Test
-    void givenPublisherThrowsException_whenIngest_thenTransactionNotIngested(CapturedOutput output) throws Exception {
+    void givenPublisherThrowsException_whenIngest_thenTransactionNotIngested(CapturedOutput output) {
         Transaction request = Transaction.builder().transactionId(111L).build();
-        doThrow(new InterruptedException())
+        doThrow(new TransactionPublisherException(new Throwable("Unable to send message")))
                 .when(transactionsPublisher).publish(request);
 
-        assertThrows(TransactionPublisherException.class, () -> underTest.ingest(request));
+        underTest.ingest(request);
 
         verify(transactionsPublisher).publish(request);
         assertThat(output).contains("Error while trying to ingest transaction");
