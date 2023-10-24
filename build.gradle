@@ -10,7 +10,6 @@ version = '0.0.1-SNAPSHOT'
 ext {
 	OPENAPI_VERSION = '2.2.0'
 	LOGBACK_ENCODER_VERSION = '7.4'
-
 	REST_ASSURED_VERSION = '5.3.0'
 }
 
@@ -25,6 +24,7 @@ dependencies {
 	implementation "net.logstash.logback:logstash-logback-encoder:$LOGBACK_ENCODER_VERSION"
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation "io.rest-assured:rest-assured:$REST_ASSURED_VERSION"
+	testImplementation 'org.springframework.kafka:spring-kafka-test'
 }
 
 tasks.named('test') {
