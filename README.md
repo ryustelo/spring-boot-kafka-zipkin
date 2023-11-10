@@ -13,6 +13,11 @@ Assuming your computer has already installed Docker and Docker Compose the comma
 This service will usually run together with the [categorization-service](https://github.com/ryustelo/categorization-service), that will take that incoming transactions from Kafka, categorize them following some specific rules and publish again to the `categorized-transactions` topic.
 The Docker Compose file to set up Kafka is also included in that service for easiness, but it's just needed to be executed once. 
 
+The `compose.yml` file also includes a Zipkin server that both services are configured to send its traces all the way from the originating `ingestion-service` request down to the `categorization-service` Kafka publishing.
+That Zipkin server is configured to run in http://localhost:9411/ by default.
+
+![traces](docs/trace.png)
+
 ### Dependencies
 As said, to properly run this `ingestion-service` the running computer will need a proper installation of Docker and Docker Compose.  
 
