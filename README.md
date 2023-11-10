@@ -26,3 +26,4 @@ For further reference, please consider the following sections:
 
 * [Docker Compose Support](https://docs.spring.io/spring-boot/docs/3.1.4/reference/htmlsingle/index.html#features.docker-compose)
 * [Spring for Apache Kafka](https://docs.spring.io/spring-boot/docs/3.1.4/reference/htmlsingle/index.html#messaging.kafka)
+* [Getting Started with Distributed Tracing](https://docs.spring.io/spring-boot/docs/3.1.4/reference/html/actuator.html#actuator.micrometer-tracing.getting-started)
