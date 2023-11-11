@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.4'
+    id 'io.spring.dependency-management' version '1.1.3'
+}
+
+group = 'ryl.spring.boot.kafka.zipkin.categorization'
+version = '0.0.1-SNAPSHOT'
+
+ext {
+    JACKSON_DATATYPE_VERSION = '2.15.2'
+    KAFKA_VERSION = '3.0.11'
+    LOGBACK_ENCODER_VERSION = '7.4'
+    MICROMETER_VERSION = '1.1.5'
+    ZIPKIN_KAFKA_CLIENTS_VERSION = '5.15.1'
+    ZIPKIN_REPORTER_VERSION = '2.16.3'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation "org.springframework.kafka:spring-kafka:$KAFKA_VERSION"
+    implementation "io.micrometer:micrometer-tracing-bridge-brave:$MICROMETER_VERSION"
+    implementation "io.zipkin.reporter2:zipkin-reporter-brave:$ZIPKIN_REPORTER_VERSION"
+    implementation "io.zipkin.reporter2:zipkin-sender-urlconnection:$ZIPKIN_REPORTER_VERSION"
+    implementation "io.zipkin.brave:brave-instrumentation-kafka-clients:$ZIPKIN_KAFKA_CLIENTS_VERSION"
+    implementation "net.logstash.logback:logstash-logback-encoder:$LOGBACK_ENCODER_VERSION"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$JACKSON_DATATYPE_VERSION"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.springframework.kafka:spring-kafka-test:$KAFKA_VERSION"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+java {
+    sourceCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}

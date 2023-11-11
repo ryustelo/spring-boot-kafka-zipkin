@@ -1,1 +1,4 @@
-rootProject.name = 'ingestion-service'
+rootProject.name = 'spring-boot-kafka-zipkin'
+include 'ingestion-service'
+include 'categorization-service'
+

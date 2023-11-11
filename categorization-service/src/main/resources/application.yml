@@ -1,0 +1,28 @@
+spring:
+  application.name: categorization-service
+  kafka:
+    bootstrap-servers: localhost:29092
+    client-id: categorization-client
+    group-id: categorization-group
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json:
+          value.default.type: ryl.spring.boot.kafka.zipkin.categorization.model.Transaction
+          use.type.headers: false
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+topic:
+  name:
+    transaction-ingestion: incoming-transactions
+    transaction-categorization: categorized-transactions
+
+logging:
+  level.root: INFO
+  pattern.level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+management.tracing.sampling.probability: 1.0
